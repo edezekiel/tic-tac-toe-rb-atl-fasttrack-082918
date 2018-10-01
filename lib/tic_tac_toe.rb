@@ -42,22 +42,15 @@ end
 def turn(board)
   puts "Please enter 1-9:"
   input = gets.strip
-  index = input_to_index(input)
-  if !valid_move?(board, index)
+  if !valid_move?(board, input)
     turn(board)
   end
-  move(board, index, current_player(board))
+  move(board, input, current_player(board))
   display_board(board)
 end
 
 def turn_count(board)
-  counter = 0
-  board.each do | mark |
-    if mark == "X" || mark == "O"
-      counter += 1
-    end
-  end
-  counter
+  board.count{|token| token == "X" || token == "O"}
 end
 
 def current_player(board)
