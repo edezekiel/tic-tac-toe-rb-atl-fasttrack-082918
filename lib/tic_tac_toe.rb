@@ -1,9 +1,3 @@
-
-
-
-########## lib ############
-
-
 WIN_COMBINATIONS = [
   [0,1,2], # Top row
   [3,4,5],  # Middle row
@@ -27,12 +21,12 @@ def input_to_index(user_input)
   user_input.to_i - 1
 end
 
-def move(board, index, current_player
+def move(board, index, current_player = "X")
   board[index] = current_player
 end
 
 def position_taken?(board, index)
-  !(board[index] != " " || board[index].nil?)
+  board[index] != " "
 end
 
 def valid_move?(board, index)
@@ -44,7 +38,7 @@ def turn(board)
   input = gets.strip
   index = input_to_index(input)
   if valid_move?(board, index)
-    move(board, index, current_player)
+    move(board, index)
     display_board(board)
   else
     turn(board)
@@ -56,14 +50,20 @@ def turn_count(board)
 
   board.each do | mark |
     if mark == "X" || mark == "O"
-    counter += 1
+      counter += 1
     end
   end
   counter
 end
 
 def current_player(board)
-  turn_count(board) % 2 == 0 ? "X" : "O"
+  current = ""
+  if turn_count(board) % 2 == 0
+    current = "X"
+  else
+    current = "O"
+  end
+  current
 end
 
 def won?(board)
@@ -90,7 +90,7 @@ def draw?(board)
 end
 
 def over?(board)
-  won?(board) || draw?(board)
+  won?(board) || full?(board)
 end
 
 def winner(board)
@@ -99,8 +99,8 @@ def winner(board)
   end
 end
 
+
 def play(board)
-  turn(board)
   until over?(board)
     turn(board)
   end
