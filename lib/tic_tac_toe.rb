@@ -52,7 +52,14 @@ def turn(board)
 end
 
 def turn_count(board)
-  board.count{|token| token == "X" || token == "O"}
+  counter = 0
+
+  board.each do | mark |
+    if mark == "X" || mark == "O"
+    counter += 1
+    end
+  end
+  counter
 end
 
 def current_player(board)
